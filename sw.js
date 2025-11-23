@@ -1,4 +1,4 @@
-const CACHE_NAME = "albaz-lore-v4";
+const CACHE_NAME = "albaz-lore-v5";
 const ASSETS = [
   "./",
   "./index.html",
