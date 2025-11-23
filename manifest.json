@@ -37,7 +37,7 @@
   "screenshots": [
     {
       "src": "./screenshot.png",
-      "sizes": "557x836",
+      "sizes": "1080x2210",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "Schermata Home"
