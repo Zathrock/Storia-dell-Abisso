@@ -1,4 +1,4 @@
-const CACHE_NAME = "albaz-lore-v22"; // Ho alzato la versione per forzare l'aggiornamento
+const CACHE_NAME = "albaz-lore-v24"; // Ho alzato la versione per forzare l'aggiornamento
 const ASSETS = [
   "./",
   "./index.html",
