@@ -1,10 +1,11 @@
-const CACHE_NAME = "albaz-lore-v5";
+const CACHE_NAME = "albaz-lore-v20"; // Ho messo v20 per essere sicuri che aggiorni!
 const ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./icon-192.png",
-  "./icon-512.png"
+  "./icon-512.png",
+  "./screenshot.png"  // <--- Questo mancava!
 ];
 
 self.addEventListener("install", (e) => {
