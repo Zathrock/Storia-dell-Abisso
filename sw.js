@@ -1,36 +1,36 @@
-const CACHE_NAME = "albaz-lore-v25"; // Ho alzato la versione per forzare l'aggiornamento
+const CACHE_NAME = "albaz-lore-v27";
 const ASSETS = [
-  "/Storia-dell-Abisso/",
-  "/Storia-dell-Abisso/index.html",
-  "/Storia-dell-Abisso/manifest.json",
-  "/Storia-dell-Abisso/icon-192.png",
-  "/Storia-dell-Abisso/icon-512.png"
+  "./",
+  "./index.html",
+  "./manifest.json",
+  "./icon-192.png",
+  "./icon-512.png",
+  "./screenshot.png"
 ];
 
-// 1. Installazione
+// Installazione
 self.addEventListener("install", (e) => {
-  self.skipWaiting(); // Forza il SW ad attivarsi subito
+  self.skipWaiting();
   e.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
 });
 
-// 2. Pulizia vecchie cache (MANCAVA QUESTO!)
+// Attivazione e pulizia vecchia cache
 self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches.keys().then((keyList) => {
       return Promise.all(
         keyList.map((key) => {
           if (key !== CACHE_NAME) {
-            console.log("Rimozione vecchia cache:", key);
             return caches.delete(key);
           }
         })
       );
     })
   );
-  return self.clients.claim(); // Prende subito il controllo della pagina
+  return self.clients.claim();
 });
 
-// 3. Fetch (Strategia: Cache First, Network Fallback)
+// Fetch
 self.addEventListener("fetch", (e) => {
   e.respondWith(
     caches.match(e.request).then((response) => {
