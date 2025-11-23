@@ -3,7 +3,8 @@
   "name": "Storia dell'Abisso",
   "short_name": "Albaz Lore",
   "description": "La storia completa e illustrata della lore di Albaz e dell'Abisso.",
-  "start_url": "./index.html",
+  "start_url": "/Storia-dell-Abisso/",
+  "scope": "/Storia-dell-Abisso/",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#020617",
@@ -12,12 +13,14 @@
     {
       "src": "icon-192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "screenshots": [
