@@ -1,7 +1,8 @@
 {
   "name": "Storia dell'Abisso",
   "short_name": "Albaz Lore",
-  "start_url": "./index.html",
+  "start_url": ".",
+  "scope": ".",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#020617",
