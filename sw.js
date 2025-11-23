@@ -1,11 +1,11 @@
-const CACHE_NAME = "albaz-lore-v33"; // Versione CardCluster
+const CACHE_NAME = "albaz-lore-final-v1";
 const ASSETS = [
-  "/Storia-dell-Abisso/",
-  "/Storia-dell-Abisso/index.html",
+  "/Storia-dell-Abisso/",             // La cartella (per quando navighi)
+  "/Storia-dell-Abisso/index.html",   // IL FILE (Fondamentale per lo start_url)
   "/Storia-dell-Abisso/manifest.json",
   "/Storia-dell-Abisso/icon-192.png",
   "/Storia-dell-Abisso/icon-512.png",
-  // Librerie esterne per non rompere la grafica
+  // Librerie esterne
   "https://cdn.tailwindcss.com",
   "https://unpkg.com/react@18/umd/react.production.min.js",
   "https://unpkg.com/react-dom@18/umd/react-dom.production.min.js",
@@ -15,7 +15,9 @@ const ASSETS = [
 
 self.addEventListener("install", (e) => {
   self.skipWaiting();
-  e.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
+  e.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+  );
 });
 
 self.addEventListener("activate", (e) => {
@@ -34,16 +36,7 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   e.respondWith(
     caches.match(e.request).then((response) => {
-      // Se c'è nella cache, usalo
-      if (response) return response;
-      
-      // TRUCCO FONDAMENTALE: Se Android chiede la cartella, dagli index.html
-      // Questo è quello che fa funzionare start_url: "/" di CardCluster
-      if (e.request.url.endsWith("/Storia-dell-Abisso/")) {
-        return caches.match("/Storia-dell-Abisso/index.html");
-      }
-
-      return fetch(e.request);
+      return response || fetch(e.request);
     })
   );
 });
