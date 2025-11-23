@@ -1,11 +1,10 @@
-const CACHE_NAME = "albaz-lore-v24"; // Ho alzato la versione per forzare l'aggiornamento
+const CACHE_NAME = "albaz-lore-v25"; // Ho alzato la versione per forzare l'aggiornamento
 const ASSETS = [
-  "./",
-  "./index.html",
-  "./manifest.json",
-  "./icon-192.png",
-  "./icon-512.png",
-  "./screenshot.png"
+  "/Storia-dell-Abisso/",
+  "/Storia-dell-Abisso/index.html",
+  "/Storia-dell-Abisso/manifest.json",
+  "/Storia-dell-Abisso/icon-192.png",
+  "/Storia-dell-Abisso/icon-512.png"
 ];
 
 // 1. Installazione
