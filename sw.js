@@ -1,4 +1,4 @@
-const CACHE_NAME = "albaz-lore-v20"; // Ho messo v20 per essere sicuri che aggiorni!
+const CACHE_NAME = "albaz-lore-v21"; // Ho messo v20 per essere sicuri che aggiorni!
 const ASSETS = [
   "./",
   "./index.html",
