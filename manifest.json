@@ -1,46 +1,21 @@
 {
   "name": "Storia dell'Abisso",
   "short_name": "Albaz Lore",
-  "id": "albaz-lore-app",
-  "description": "La storia completa e illustrata della lore di Albaz.",
-  "start_url": "/Storia-dell-Abisso/index.html",
-  "display": "standalone",
-  "background_color": "#020617",
-  "theme_color": "#020617",
-  "orientation": "portrait",
   "icons": [
     {
-      "src": "/Storia-dell-Abisso/icon-192.png",
+      "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
-      "src": "/Storia-dell-Abisso/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/Storia-dell-Abisso/icon-512.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/Storia-dell-Abisso/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "type": "image/png"
     }
   ],
-  "screenshots": [
-    {
-      "src": "/Storia-dell-Abisso/screenshot.png",
-      "sizes": "1080x2210",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Schermata Home"
-    }
-  ]
+  "display": "standalone",
+  "start_url": "/Storia-dell-Abisso/",
+  "scope": "/Storia-dell-Abisso/",
+  "background_color": "#020617",
+  "theme_color": "#020617"
 }
