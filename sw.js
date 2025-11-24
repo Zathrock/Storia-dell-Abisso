@@ -1,4 +1,4 @@
-const CACHE_NAME = "albaz-simple-v9";
+const CACHE_NAME = "albaz-simple-v10";
 const ASSETS = [
   "./",
   "./index.html",
@@ -26,6 +26,7 @@ self.addEventListener("fetch", (e) => {
   );
 
 });
+
 
 
 
