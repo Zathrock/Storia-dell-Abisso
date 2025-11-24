@@ -22,7 +22,7 @@
             font-family: 'Lato', sans-serif; 
             background-color: #020617; 
             overscroll-behavior-y: none; 
-            overflow-x: hidden; /* Fix extra per sicurezza */
+            overflow-x: hidden;
         }
         h1, h2, h3, .font-fantasy { font-family: 'Cinzel', serif; }
         
@@ -594,7 +594,7 @@
 
             useEffect(() => {
                 setShowHeroText(true);
-                setActTab('album'); 
+                // Rimosso setActTab('album') per mantenere la tab corrente al cambio capitolo
             }, [chapterId]);
 
             const handleNext = () => {
@@ -662,9 +662,17 @@
                 <div className="min-h-screen w-full max-w-md mx-auto bg-slate-950 shadow-2xl flex flex-col relative border-x border-slate-900/50 overflow-hidden">
                     <nav className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/50 px-4 h-14 flex items-center justify-between">
                         {view === 'album' ? (
-                            <button onClick={goBack} className="flex items-center gap-1 text-yellow-500 hover:text-yellow-400 transition-colors font-bold font-fantasy tracking-wide text-sm">
-                                <Icons.Back /> INDICE
-                            </button>
+                            <>
+                                <button onClick={goBack} className="flex items-center gap-1 text-yellow-500 hover:text-yellow-400 transition-colors font-bold font-fantasy tracking-wide text-sm">
+                                    <Icons.Back /> INDICE
+                                </button>
+                                <button 
+                                    onClick={() => setShowHeroText(!showHeroText)}
+                                    className="text-slate-400 hover:text-white transition-colors p-2"
+                                >
+                                    {showHeroText ? <Icons.EyeOff /> : <Icons.Eye />}
+                                </button>
+                            </>
                         ) : (
                             <div className="flex items-center justify-between w-full">
                                 <span className="text-slate-200 font-bold font-fantasy tracking-wider text-lg">STORIA DELL'ABISSO</span>
@@ -725,15 +733,7 @@
                                      />
                                      <div className={`absolute inset-0 bg-slate-950/80 backdrop-blur-[1px] transition-opacity duration-700 ${showHeroText ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} />
                                      
-                                     <button 
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setShowHeroText(!showHeroText);
-                                        }}
-                                        className="absolute top-3 right-3 z-30 text-white/50 hover:text-white bg-black/20 hover:bg-black/40 p-2 rounded-full transition-all backdrop-blur-sm"
-                                     >
-                                        {showHeroText ? <Icons.EyeOff /> : <Icons.Eye />}
-                                     </button>
+                                     {/* Removed Eye button from here */}
 
                                      {/* FRECCE NAVIGAZIONE CAPITOLI */}
                                      {chapterId > 1 && (
