@@ -659,7 +659,7 @@
             };
 
             return (
-                <div className="min-h-screen w-full max-w-md mx-auto bg-slate-950 shadow-2xl flex flex-col relative border-x border-slate-900/50 overflow-hidden">
+                <div className="min-h-screen w-full max-w-md mx-auto bg-slate-950 shadow-2xl flex flex-col relative border-x border-slate-900/50">
                     <nav className="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/50 px-4 h-14 flex items-center justify-between">
                         {view === 'album' ? (
                             <>
@@ -688,7 +688,7 @@
                         )}
                     </nav>
 
-                    <main className="flex-1 p-4">
+                    <main className="flex-1 p-4 overflow-x-hidden">
                         {view === 'home' && (
                             <div className="space-y-6 animate-fadeIn">
                                 <div className="text-center pt-2 pb-6 space-y-2">
