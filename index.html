@@ -69,10 +69,10 @@
 
         const getHighResUrl = (url) => {
             if (!url) return '';
+            if (url.includes('glide')) return url;
             return url.replace('cards_small', 'cards');
         };
 
-        // Funzione helper per estrarre ID video e thumbnail da YouTube
         const getYoutubeId = (url) => {
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
             const match = url.match(regExp);
@@ -82,7 +82,7 @@
         const getYoutubeThumbnail = (id) => `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
 
         const Icons = {
-            Book: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 4.168 6.253v13C4.168 19.977 5.754 20.355 7.5 20.355S10.832 19.977 12 19.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 19.977 18.247 20.355 16.5 20.355c-1.746 0-3.332-.385-4.5-1.102" /></svg>,
+            Book: () => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>,
             Back: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>,
             Close: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>,
             Sparkles: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>,
@@ -93,10 +93,10 @@
             EyeOff: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>,
             Download: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>,
             Video: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
-            Play: () => <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            Play: () => <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>,
+            Tv: () => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125Z" /></svg>
         };
 
-        // --- DATI CAPITOLI ---
         const chaptersData = [
             { 
                 id: 1, 
@@ -105,9 +105,9 @@
                 cover: "https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/2zPzzSTjYneNQK40rjkF/pub/D6Hqrqx0o2YXmtmWjDoK.jpg", 
                 story: `Ciò che il Cardinale ha portato alla luce erano i resti di un'antica prosperità.\n\nSarà un Vangelo, o forse una Maledizione?\n\nLe braci diventeranno la scintilla che illuminerà la terra ancora una volta.\n\nI Cavalieri dei Sacri Insegnamenti preparano le loro spade,\nMentre le Bestie di Ferro caricano e puntano le armi.\n\nE poi, il Giovane incontra la Fanciulla.\n\nQui, i cancelli dell'Abisso stanno per aprirsi.`,
                 videos: [
-                    { title: "Dogmatika Ecclesia, the Virtuous", url: "https://www.youtube.com/watch?v=hY359iE59Bg" },
-                    { title: "Dogmatika Fleurdelis, the Knighted", url: "https://www.youtube.com/watch?v=RDMPbSTRG7I" },
-                    { title: "Tri-Brigade Shuraig the Ominous Omen", url: "https://www.youtube.com/watch?v=-nKp2XbUPNE" }
+                    { title: "The Fallen & The Virtuous I: Dogmatika Ecclesia, the Virtuous", url: "https://www.youtube.com/watch?v=hY359iE59Bg" },
+                    { title: "The Fallen & The Virtuous II: Dogmatika Fleurdelis, the Knighted", url: "https://www.youtube.com/watch?v=RDMPbSTRG7I" },
+                    { title: "The Fallen & The Virtuous III: Tri-Brigade Shuraig the Ominous Omen", url: "https://www.youtube.com/watch?v=-nKp2XbUPNE" }
                 ]
             },
             { 
@@ -117,8 +117,8 @@
                 cover: "https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/2zPzzSTjYneNQK40rjkF/pub/57nlVHrKACfQFgfkYfb8.jpg", 
                 story: `Una tempesta di tragicommedia scoppia nell'Abisso.\n\nUna breve avventura,\neppure l'ombra di un artificio giace oltre il velo.\n\nNascosta tra le quinte del palco, risuona una melodia di amore e odio.\n\nNelle profondità del Vuoto, la disperazione si contorce.\n\nIl destino irradia una luce misteriosa sui Despia.\n\nQui, il sipario del Dramma della Malvagità si alza.`,
                 videos: [
-                    { title: "Fallen of Albaz", url: "https://www.youtube.com/watch?v=R5Np42rXaXc" },
-                    { title: "Tri-Brigade Kitt", url: "https://www.youtube.com/watch?v=M_aCXrs1fLI" }
+                    { title: "The Fallen & The Virtuous IV: Fallen of Albaz", url: "https://www.youtube.com/watch?v=R5Np42rXaXc" },
+                    { title: "The Fallen & The Virtuous V: Tri-Brigade Kitt", url: "https://www.youtube.com/watch?v=M_aCXrs1fLI" }
                 ]
             },
             { 
@@ -128,7 +128,7 @@
                 cover: "https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/2zPzzSTjYneNQK40rjkF/pub/Uz2f7ZaEl8UmkUD9zMJB.jpg", 
                 story: `Guardiani della Sacra Vetta.\n\nPer rispondere ai loro voti,\nun Drago di Spade, avvolto da fiamme di ghiaccio.\n\nCiononostante, la farsa non cessa.\n\nIl Giullare della divinità ghigna nel cielo.\n\nL'innocente Fanciulla Sacra si tinge di rosso.\n\nQui, il grido del drago non può raggiungerla.`,
                 videos: [
-                    { title: "Albion the Branded Dragon", url: "https://www.youtube.com/watch?v=kOP1i4baEmk" }
+                    { title: "The Fallen & The Virtuous VI: Albion the Branded Dragon", url: "https://www.youtube.com/watch?v=kOP1i4baEmk" }
                 ]
             },
             { 
@@ -338,7 +338,6 @@
         ];
 
         // --- COMPONENTS ---
-        // ... existing Card and Modal components ...
         const Card = ({ data, onClick }) => (
             <div 
                 onClick={() => onClick(data)} 
@@ -538,10 +537,16 @@
 
         const App = () => {
             const [view, setView] = useState('home');
+            const [actTab, setActTab] = useState('album'); 
             const [chapterId, setChapterId] = useState(null);
             const [selectedCard, setSelectedCard] = useState(null);
             const [showHeroText, setShowHeroText] = useState(true);
             const [installPrompt, setInstallPrompt] = useState(null);
+            const [chapterAnim, setChapterAnim] = useState('');
+            
+            // --- NUOVI STATI PER ZOOM IMMAGINE CAPITOLO ---
+            const [showFullChapterImage, setShowFullChapterImage] = useState(false);
+            const [chapterFullImageAnim, setChapterFullImageAnim] = useState('animate-zoomIn');
 
             const currentChapter = useMemo(() => chaptersData.find(c => c.id === chapterId), [chapterId]);
             const currentCards = useMemo(() => cardsData.filter(c => c.chapterId === chapterId), [chapterId]);
@@ -550,7 +555,6 @@
             const hasPrev = currentIndex > 0;
             const hasNext = currentIndex < currentCards.length - 1;
 
-            // INSTALLAZIONE APP
             useEffect(() => {
                 const handleBeforeInstallPrompt = (e) => {
                     e.preventDefault();
@@ -570,7 +574,6 @@
                 });
             };
 
-            // GESTIONE BACK BUTTON ANDROID/BROWSER
             useEffect(() => {
                 const handlePopState = (event) => {
                     if (selectedCard) {
@@ -586,6 +589,7 @@
 
             useEffect(() => {
                 setShowHeroText(true);
+                setActTab('album'); 
             }, [chapterId]);
 
             const handleNext = () => {
@@ -603,6 +607,28 @@
                 window.scrollTo(0,0); 
             };
 
+            const handleNextChapter = () => {
+                if (chapterId < chaptersData.length) {
+                    setChapterAnim('anim-exit-left');
+                    setTimeout(() => {
+                        setChapterId(prev => prev + 1);
+                        setChapterAnim('anim-enter-right');
+                        window.scrollTo(0, 0);
+                    }, 180);
+                }
+            };
+
+            const handlePrevChapter = () => {
+                if (chapterId > 1) {
+                    setChapterAnim('anim-exit-right');
+                    setTimeout(() => {
+                        setChapterId(prev => prev - 1);
+                        setChapterAnim('anim-enter-left');
+                        window.scrollTo(0, 0);
+                    }, 180);
+                }
+            };
+
             const openCard = (card) => {
                 window.history.pushState({ page: 'modal' }, '', '');
                 setSelectedCard(card);
@@ -610,6 +636,21 @@
 
             const goBack = () => {
                 window.history.back();
+            };
+
+            // --- NUOVE FUNZIONI PER APERTURA IMMAGINE CAPITOLO ---
+            const openChapterFullImage = () => {
+                setChapterFullImageAnim('animate-zoomIn');
+                setShowFullChapterImage(true);
+            };
+
+            const closeChapterFullImage = (e) => {
+                e?.stopPropagation();
+                setChapterFullImageAnim('animate-zoomOut');
+                setTimeout(() => {
+                    setShowFullChapterImage(false);
+                    setChapterFullImageAnim('animate-zoomIn');
+                }, 300);
             };
 
             return (
@@ -621,7 +662,7 @@
                             </button>
                         ) : (
                             <div className="flex items-center justify-between w-full">
-                                <span className="text-slate-300 font-bold font-fantasy tracking-wider text-lg">STORIA DELL'ABISSO</span>
+                                <span className="text-slate-200 font-bold font-fantasy tracking-wider text-lg">STORIA DELL'ABISSO</span>
                                 {installPrompt && (
                                     <button 
                                         onClick={handleInstallClick}
@@ -637,11 +678,12 @@
                     <main className="flex-1 p-4">
                         {view === 'home' && (
                             <div className="space-y-6 animate-fadeIn">
-                                <div className="text-center py-6 space-y-2">
+                                <div className="text-center pt-2 pb-6 space-y-2">
                                     <h1 className="text-3xl text-yellow-600 font-fantasy">Cronache del Caduto e della Virtuosa</h1>
-                                    <p className="text-yellow-700 text-sm italic">"Rivela gli Atti e scopri la verità perduta"</p>
+                                    <p className="text-slate-200 text-sm italic">"Rivela gli Atti e scopri la verità perduta"</p>
                                 </div>
-                                <div className="grid gap-6">
+
+                                <div className="grid gap-6 animate-slideUp">
                                     {chaptersData.map(chapter => (
                                         <div 
                                             key={chapter.id} 
@@ -669,22 +711,46 @@
                         )}
 
                         {view === 'album' && currentChapter && (
-                            <div className="animate-slideUp pb-10">
-                                <div className="relative mb-8 rounded-xl border border-slate-700 overflow-hidden text-center shadow-2xl">
+                            <div className={`pb-10 ${chapterAnim || 'animate-slideUp'}`}>
+                                <div className="relative mb-6 rounded-xl border border-slate-700 overflow-hidden text-center shadow-2xl">
                                      <div 
-                                        className="absolute inset-0 bg-cover bg-center transition-all duration-700"
+                                        className={`absolute inset-0 bg-cover bg-center transition-all duration-700 ${!showHeroText ? 'cursor-zoom-in' : ''}`}
                                         style={{ backgroundImage: `url(${currentChapter.cover})` }}
+                                        onClick={() => !showHeroText && openChapterFullImage()}
                                      />
-                                     <div className={`absolute inset-0 bg-slate-950/80 backdrop-blur-[1px] transition-opacity duration-700 ${showHeroText ? 'opacity-100' : 'opacity-0'}`} />
+                                     <div className={`absolute inset-0 bg-slate-950/80 backdrop-blur-[1px] transition-opacity duration-700 ${showHeroText ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} />
                                      
                                      <button 
-                                        onClick={() => setShowHeroText(!showHeroText)}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setShowHeroText(!showHeroText);
+                                        }}
                                         className="absolute top-3 right-3 z-30 text-white/50 hover:text-white bg-black/20 hover:bg-black/40 p-2 rounded-full transition-all backdrop-blur-sm"
                                      >
                                         {showHeroText ? <Icons.EyeOff /> : <Icons.Eye />}
                                      </button>
 
-                                     <div className={`relative z-10 p-6 transition-opacity duration-700 ${showHeroText ? 'opacity-100' : 'opacity-0'}`}>
+                                     {/* FRECCE NAVIGAZIONE CAPITOLI */}
+                                     {chapterId > 1 && (
+                                        <button 
+                                            onClick={(e) => { e.stopPropagation(); handlePrevChapter(); }}
+                                            className="absolute left-1 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center z-30 text-white/70 hover:text-white bg-black/40 hover:bg-black/60 transition-all backdrop-blur-sm rounded-full"
+                                        >
+                                            <Icons.Prev />
+                                        </button>
+                                     )}
+                                     {chapterId < chaptersData.length && (
+                                        <button 
+                                            onClick={(e) => { e.stopPropagation(); handleNextChapter(); }}
+                                            className="absolute right-1 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center z-30 text-white/70 hover:text-white bg-black/40 hover:bg-black/60 transition-all backdrop-blur-sm rounded-full"
+                                        >
+                                            <Icons.Next />
+                                        </button>
+                                     )}
+
+                                     <div 
+                                        className={`relative z-10 p-6 transition-opacity duration-700 pointer-events-none ${showHeroText ? 'opacity-100' : 'opacity-0'}`}
+                                     >
                                          <h2 className="text-2xl text-yellow-500 font-fantasy mb-3 drop-shadow-lg">{currentChapter.fullTitle}</h2>
                                          <div className="h-px w-20 bg-gradient-to-r from-transparent via-yellow-600 to-transparent mx-auto mb-4"></div>
                                          <p className="text-slate-200 text-sm italic font-serif whitespace-pre-line leading-relaxed drop-shadow-md">
@@ -692,31 +758,46 @@
                                          </p>
                                      </div>
                                 </div>
-                                {currentCards.length > 0 ? (
-                                    <div className="grid grid-cols-3 border-t border-l border-dashed border-slate-700/50 bg-slate-900/30 rounded-lg overflow-hidden">
-                                        {currentCards.map((card, idx) => (
-                                            <div key={idx} className="border-r border-b border-dashed border-slate-700/50 p-2 flex items-center justify-center">
-                                                <Card data={card} onClick={openCard} />
-                                            </div>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <div className="text-center py-16 border border-dashed border-slate-800 rounded-xl bg-slate-900/20"><p class="text-slate-500">Nessuna memoria trovata.</p></div>
+
+                                {/* TAB NAVIGATION */}
+                                <div className="flex p-0.5 bg-slate-900/50 rounded-lg border border-slate-800/50 mb-6">
+                                    <button 
+                                        onClick={() => setActTab('album')}
+                                        className={`flex-1 flex items-center justify-center gap-2 py-1.5 rounded-md transition-all font-bold text-xs tracking-wide ${actTab === 'album' ? 'bg-yellow-600 text-slate-950 shadow-lg' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'}`}
+                                    >
+                                        <Icons.Book /> ALBUM
+                                    </button>
+                                    <button 
+                                        onClick={() => setActTab('anime')}
+                                        className={`flex-1 flex items-center justify-center gap-2 py-1.5 rounded-md transition-all font-bold text-xs tracking-wide ${actTab === 'anime' ? 'bg-yellow-600 text-slate-950 shadow-lg' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'}`}
+                                    >
+                                        <Icons.Tv /> ANIME
+                                    </button>
+                                </div>
+
+                                {actTab === 'album' && (
+                                    currentCards.length > 0 ? (
+                                        <div className="grid grid-cols-3 border-t border-l border-dashed border-slate-700/50 bg-slate-900/30 rounded-lg overflow-hidden animate-fadeIn">
+                                            {currentCards.map((card, idx) => (
+                                                <div key={idx} className="border-r border-b border-dashed border-slate-700/50 p-2 flex items-center justify-center">
+                                                    <Card data={card} onClick={openCard} />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div className="text-center py-16 border border-dashed border-slate-800 rounded-xl bg-slate-900/20 animate-fadeIn"><p class="text-slate-500">Nessuna memoria trovata.</p></div>
+                                    )
                                 )}
 
-                                {/* SEZIONE VIDEO AGGIUNTA E MODIFICATA */}
-                                {currentChapter.comingSoon ? (
-                                    <div className="mt-8 animate-fadeIn text-center p-6 border border-dashed border-slate-800 rounded-lg bg-slate-900/30">
-                                         <h3 className="text-xl text-slate-500 font-fantasy mb-2 flex items-center justify-center gap-2">
-                                            <Icons.Video /> In Arrivo
-                                        </h3>
-                                    </div>
-                                ) : currentChapter.videos && currentChapter.videos.length > 0 && (
-                                    <div className="mt-8 animate-fadeIn">
-                                        <h3 className="text-lg text-yellow-600 font-fantasy mb-4 flex items-center gap-2 border-b border-slate-800 pb-2">
-                                            <Icons.Video /> Archivi Video
-                                        </h3>
-                                        <div className="grid gap-4">
+                                {actTab === 'anime' && (
+                                    currentChapter.comingSoon ? (
+                                        <div className="mt-8 animate-fadeIn text-center p-6 border border-dashed border-slate-800 rounded-lg bg-slate-900/30">
+                                             <h3 className="text-xl text-slate-500 font-fantasy mb-2 flex items-center justify-center gap-2">
+                                                <Icons.Video /> In Arrivo
+                                            </h3>
+                                        </div>
+                                    ) : currentChapter.videos && currentChapter.videos.length > 0 ? (
+                                        <div className="grid gap-6 animate-fadeIn">
                                             {currentChapter.videos.map((video, idx) => {
                                                 const videoId = getYoutubeId(video.url);
                                                 const thumbUrl = getYoutubeThumbnail(videoId);
@@ -726,7 +807,7 @@
                                                         href={video.url}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="relative group bg-slate-900/50 border border-slate-800 rounded-lg overflow-hidden hover:border-yellow-600/50 cursor-pointer transition-all block"
+                                                        className="relative group bg-slate-900/50 border border-slate-800 rounded-lg overflow-hidden hover:border-yellow-600/50 cursor-pointer transition-all block shadow-lg"
                                                     >
                                                         <div className="relative aspect-video w-full overflow-hidden">
                                                             <img src={thumbUrl} alt={video.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
@@ -743,10 +824,37 @@
                                                 );
                                             })}
                                         </div>
-                                    </div>
+                                    ) : (
+                                        <div className="text-center py-16 border border-dashed border-slate-800 rounded-xl bg-slate-900/20 animate-fadeIn">
+                                            <p className="text-slate-500">Nessun video disponibile.</p>
+                                        </div>
+                                    )
                                 )}
                             </div>
                         )}
+                        
+                        {/* FULL SCREEN CHAPTER IMAGE OVERLAY */}
+                        {showFullChapterImage && currentChapter && (
+                            <div 
+                                onClick={closeChapterFullImage}
+                                className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 backdrop-blur-md animate-fadeIn cursor-zoom-out"
+                            >
+                                <button 
+                                    onClick={closeChapterFullImage} 
+                                    className="absolute top-4 right-4 text-white/70 hover:text-white p-2 bg-black/50 rounded-full z-[70]"
+                                >
+                                    <Icons.Close />
+                                </button>
+                                <div className={`relative w-full h-full flex items-center justify-center p-4 ${chapterFullImageAnim}`}>
+                                    <img 
+                                        src={currentChapter.cover} 
+                                        alt={currentChapter.title} 
+                                        className="max-w-full max-h-full object-contain shadow-2xl rounded-lg" 
+                                    />
+                                </div>
+                            </div>
+                        )}
+
                     </main>
                     {selectedCard && (
                         <Modal 
