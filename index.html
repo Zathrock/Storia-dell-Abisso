@@ -72,6 +72,15 @@
             return url.replace('cards_small', 'cards');
         };
 
+        // Funzione helper per estrarre ID video e thumbnail da YouTube
+        const getYoutubeId = (url) => {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        };
+
+        const getYoutubeThumbnail = (id) => `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+
         const Icons = {
             Book: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 4.168 6.253v13C4.168 19.977 5.754 20.355 7.5 20.355S10.832 19.977 12 19.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 19.977 18.247 20.355 16.5 20.355c-1.746 0-3.332-.385-4.5-1.102" /></svg>,
             Back: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>,
@@ -82,16 +91,64 @@
             ZoomIn: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>,
             Eye: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>,
             EyeOff: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>,
-            Download: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+            Download: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>,
+            Video: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+            Play: () => <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         };
 
         // --- DATI CAPITOLI ---
         const chaptersData = [
-            { id: 1, title: "Atto I", fullTitle: "Atto I: Il Dogma dell'Abisso", cover: "https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/2zPzzSTjYneNQK40rjkF/pub/D6Hqrqx0o2YXmtmWjDoK.jpg", story: `Ciò che il Cardinale ha portato alla luce erano i resti di un'antica prosperità.\n\nSarà un Vangelo, o forse una Maledizione?\n\nLe braci diventeranno la scintilla che illuminerà la terra ancora una volta.\n\nI Cavalieri dei Sacri Insegnamenti preparano le loro spade,\nMentre le Bestie di Ferro caricano e puntano le armi.\n\nE poi, il Giovane incontra la Fanciulla.\n\nQui, i cancelli dell'Abisso stanno per aprirsi.` },
-            { id: 2, title: "Atto II", fullTitle: "Atto II: L'Esilio", cover: "https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/2zPzzSTjYneNQK40rjkF/pub/57nlVHrKACfQFgfkYfb8.jpg", story: `Una tempesta di tragicommedia scoppia nell'Abisso.\n\nUna breve avventura,\neppure l'ombra di un artificio giace oltre il velo.\n\nNascosta tra le quinte del palco, risuona una melodia di amore e odio.\n\nNelle profondità del Vuoto, la disperazione si contorce.\n\nIl destino irradia una luce misteriosa sui Despia.\n\nQui, il sipario del Dramma della Malvagità si alza.` },
-            { id: 3, title: "Atto III", fullTitle: "Atto III: Ghiaccio e Fiamme", cover: "https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/2zPzzSTjYneNQK40rjkF/pub/Uz2f7ZaEl8UmkUD9zMJB.jpg", story: `Guardiani della Sacra Vetta.\n\nPer rispondere ai loro voti,\nun Drago di Spade, avvolto da fiamme di ghiaccio.\n\nCiononostante, la farsa non cessa.\n\nIl Giullare della divinità ghigna nel cielo.\n\nL'innocente Fanciulla Sacra si tinge di rosso.\n\nQui, il grido del drago non può raggiungerla.` },
-            { id: 4, title: "Atto IV", fullTitle: "Atto IV: Un Nuovo Potere", cover: "https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/2zPzzSTjYneNQK40rjkF/pub/tLANROn4SOhFLpTBwGj2.jpg", story: `Fiamme eruttanti e tuono ruggente: La Nazione di Ferro.\n\nNel circolo dei potenti, egli resta in vetta.\n\nLa sua ragione per resistere: per il bene dei suoi amici.\n\nCiò che suona e risuona: la campana del Dio.\n\nORA TUTTI VOI, CON TUTTO QUELLO CHE AVETE!\nANDATE, ANDATE, SARGAS!\nSPINGETE, SPINGETE, SARGAS!` },
-            { id: 5, title: "Atto V", fullTitle: "Atto V: La Resa dei Conti", cover: "https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/2zPzzSTjYneNQK40rjkF/pub/ZSO8AcUTaHR9fp6v3PQi.jpg", story: `Fiamme fragili ma connesse danzano sulle rovine.\n\nFugaci, eppure ardentemente risplendenti,\nsaranno la luce che splenderà sulle ombre cadute.\n\nEvocando il Tuono Ardente, l'Ala di Ferro, la Spada del Vero Aspetto,\nle Fiamme del Re.\n\nE poi, il ritrovo del Giovane e della Fanciulla.\n\nQui, la Terra delle Vere Fiamme sta per aprirsi.` }
+            { 
+                id: 1, 
+                title: "Atto I", 
+                fullTitle: "Atto I: Il Dogma dell'Abisso", 
+                cover: "https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/2zPzzSTjYneNQK40rjkF/pub/D6Hqrqx0o2YXmtmWjDoK.jpg", 
+                story: `Ciò che il Cardinale ha portato alla luce erano i resti di un'antica prosperità.\n\nSarà un Vangelo, o forse una Maledizione?\n\nLe braci diventeranno la scintilla che illuminerà la terra ancora una volta.\n\nI Cavalieri dei Sacri Insegnamenti preparano le loro spade,\nMentre le Bestie di Ferro caricano e puntano le armi.\n\nE poi, il Giovane incontra la Fanciulla.\n\nQui, i cancelli dell'Abisso stanno per aprirsi.`,
+                videos: [
+                    { title: "Dogmatika Ecclesia, the Virtuous", url: "https://www.youtube.com/watch?v=hY359iE59Bg" },
+                    { title: "Dogmatika Fleurdelis, the Knighted", url: "https://www.youtube.com/watch?v=RDMPbSTRG7I" },
+                    { title: "Tri-Brigade Shuraig the Ominous Omen", url: "https://www.youtube.com/watch?v=-nKp2XbUPNE" }
+                ]
+            },
+            { 
+                id: 2, 
+                title: "Atto II", 
+                fullTitle: "Atto II: L'Esilio", 
+                cover: "https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/2zPzzSTjYneNQK40rjkF/pub/57nlVHrKACfQFgfkYfb8.jpg", 
+                story: `Una tempesta di tragicommedia scoppia nell'Abisso.\n\nUna breve avventura,\neppure l'ombra di un artificio giace oltre il velo.\n\nNascosta tra le quinte del palco, risuona una melodia di amore e odio.\n\nNelle profondità del Vuoto, la disperazione si contorce.\n\nIl destino irradia una luce misteriosa sui Despia.\n\nQui, il sipario del Dramma della Malvagità si alza.`,
+                videos: [
+                    { title: "Fallen of Albaz", url: "https://www.youtube.com/watch?v=R5Np42rXaXc" },
+                    { title: "Tri-Brigade Kitt", url: "https://www.youtube.com/watch?v=M_aCXrs1fLI" }
+                ]
+            },
+            { 
+                id: 3, 
+                title: "Atto III", 
+                fullTitle: "Atto III: Ghiaccio e Fiamme", 
+                cover: "https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/2zPzzSTjYneNQK40rjkF/pub/Uz2f7ZaEl8UmkUD9zMJB.jpg", 
+                story: `Guardiani della Sacra Vetta.\n\nPer rispondere ai loro voti,\nun Drago di Spade, avvolto da fiamme di ghiaccio.\n\nCiononostante, la farsa non cessa.\n\nIl Giullare della divinità ghigna nel cielo.\n\nL'innocente Fanciulla Sacra si tinge di rosso.\n\nQui, il grido del drago non può raggiungerla.`,
+                videos: [
+                    { title: "Albion the Branded Dragon", url: "https://www.youtube.com/watch?v=kOP1i4baEmk" }
+                ]
+            },
+            { 
+                id: 4, 
+                title: "Atto IV", 
+                fullTitle: "Atto IV: Un Nuovo Potere", 
+                cover: "https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/2zPzzSTjYneNQK40rjkF/pub/tLANROn4SOhFLpTBwGj2.jpg", 
+                story: `Fiamme eruttanti e tuono ruggente: La Nazione di Ferro.\n\nNel circolo dei potenti, egli resta in vetta.\n\nLa sua ragione per resistere: per il bene dei suoi amici.\n\nCiò che suona e risuona: la campana del Dio.\n\nORA TUTTI VOI, CON TUTTO QUELLO CHE AVETE!\nANDATE, ANDATE, SARGAS!\nSPINGETE, SPINGETE, SARGAS!`,
+                videos: [],
+                comingSoon: true
+            },
+            { 
+                id: 5, 
+                title: "Atto V", 
+                fullTitle: "Atto V: La Resa dei Conti", 
+                cover: "https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/2zPzzSTjYneNQK40rjkF/pub/ZSO8AcUTaHR9fp6v3PQi.jpg", 
+                story: `Fiamme fragili ma connesse danzano sulle rovine.\n\nFugaci, eppure ardentemente risplendenti,\nsaranno la luce che splenderà sulle ombre cadute.\n\nEvocando il Tuono Ardente, l'Ala di Ferro, la Spada del Vero Aspetto,\nle Fiamme del Re.\n\nE poi, il ritrovo del Giovane e della Fanciulla.\n\nQui, la Terra delle Vere Fiamme sta per aprirsi.`,
+                videos: [],
+                comingSoon: true
+            }
         ];
 
         const cardsData = [
@@ -280,6 +337,8 @@
             { name: "New Frontier", image: "https://images.ygoprodeck.com/images/cards_small/56787189.jpg", chapterId: 5, lore: "La polvere si posa su un mondo cambiato. Le cicatrici restano, ma all'orizzonte non ci sono più muri, solo un cammino libero verso il domani." }
         ];
 
+        // --- COMPONENTS ---
+        // ... existing Card and Modal components ...
         const Card = ({ data, onClick }) => (
             <div 
                 onClick={() => onClick(data)} 
@@ -562,7 +621,7 @@
                             </button>
                         ) : (
                             <div className="flex items-center justify-between w-full">
-                                <span className="text-yellow-600 font-bold font-fantasy tracking-wider text-lg">STORIA DELL'ABISSO</span>
+                                <span className="text-slate-300 font-bold font-fantasy tracking-wider text-lg">STORIA DELL'ABISSO</span>
                                 {installPrompt && (
                                     <button 
                                         onClick={handleInstallClick}
@@ -579,8 +638,8 @@
                         {view === 'home' && (
                             <div className="space-y-6 animate-fadeIn">
                                 <div className="text-center py-6 space-y-2">
-                                    <h1 className="text-3xl text-slate-100 font-fantasy">Cronache di Albaz</h1>
-                                    <p className="text-slate-400 text-sm italic">"Apri gli atti e rivela la verità perduta"</p>
+                                    <h1 className="text-3xl text-yellow-600 font-fantasy">Cronache del Caduto e della Virtuosa</h1>
+                                    <p className="text-yellow-700 text-sm italic">"Rivela gli Atti e scopri la verità perduta"</p>
                                 </div>
                                 <div className="grid gap-6">
                                     {chaptersData.map(chapter => (
@@ -622,7 +681,7 @@
                                         onClick={() => setShowHeroText(!showHeroText)}
                                         className="absolute top-3 right-3 z-30 text-white/50 hover:text-white bg-black/20 hover:bg-black/40 p-2 rounded-full transition-all backdrop-blur-sm"
                                      >
-                                         {showHeroText ? <Icons.EyeOff /> : <Icons.Eye />}
+                                        {showHeroText ? <Icons.EyeOff /> : <Icons.Eye />}
                                      </button>
 
                                      <div className={`relative z-10 p-6 transition-opacity duration-700 ${showHeroText ? 'opacity-100' : 'opacity-0'}`}>
@@ -643,6 +702,48 @@
                                     </div>
                                 ) : (
                                     <div className="text-center py-16 border border-dashed border-slate-800 rounded-xl bg-slate-900/20"><p class="text-slate-500">Nessuna memoria trovata.</p></div>
+                                )}
+
+                                {/* SEZIONE VIDEO AGGIUNTA E MODIFICATA */}
+                                {currentChapter.comingSoon ? (
+                                    <div className="mt-8 animate-fadeIn text-center p-6 border border-dashed border-slate-800 rounded-lg bg-slate-900/30">
+                                         <h3 className="text-xl text-slate-500 font-fantasy mb-2 flex items-center justify-center gap-2">
+                                            <Icons.Video /> In Arrivo
+                                        </h3>
+                                    </div>
+                                ) : currentChapter.videos && currentChapter.videos.length > 0 && (
+                                    <div className="mt-8 animate-fadeIn">
+                                        <h3 className="text-lg text-yellow-600 font-fantasy mb-4 flex items-center gap-2 border-b border-slate-800 pb-2">
+                                            <Icons.Video /> Archivi Video
+                                        </h3>
+                                        <div className="grid gap-4">
+                                            {currentChapter.videos.map((video, idx) => {
+                                                const videoId = getYoutubeId(video.url);
+                                                const thumbUrl = getYoutubeThumbnail(videoId);
+                                                return (
+                                                    <a 
+                                                        key={idx}
+                                                        href={video.url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="relative group bg-slate-900/50 border border-slate-800 rounded-lg overflow-hidden hover:border-yellow-600/50 cursor-pointer transition-all block"
+                                                    >
+                                                        <div className="relative aspect-video w-full overflow-hidden">
+                                                            <img src={thumbUrl} alt={video.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
+                                                            <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/20 transition-colors">
+                                                                <div className="w-14 h-14 bg-red-600/90 rounded-full flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+                                                                    <Icons.Play />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="p-3 bg-slate-900 border-t border-slate-800">
+                                                            <h4 className="text-slate-200 font-bold text-sm group-hover:text-yellow-500 transition-colors line-clamp-2">{video.title}</h4>
+                                                        </div>
+                                                    </a>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
                                 )}
                             </div>
                         )}
