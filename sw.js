@@ -1,10 +1,10 @@
-const CACHE_NAME = "albaz-simple-v20";
+const CACHE_NAME = "albaz-simple-v21";
 const ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
   "./icon-192.png",
-  "./icon-512-v2.png",
+  "./icon-512.png",
   "./screenshot.png"
 ];
 
